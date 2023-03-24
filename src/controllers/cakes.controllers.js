@@ -3,7 +3,6 @@ export async function createCakes(req,res){
     const {name, price, description, image} = req.body
 
     try {
-        console.log("entrou post cakes")
 
         const cakename = await db.query(`SELECT * FROM cakes WHERE name = '${name}'`)
 
