@@ -13,3 +13,22 @@ export async function createClient(req,res){
       }
 
 }
+
+export async function  getClientOrder(req, res){
+    const id = req.params.id
+
+    try{
+       const order = await db.query(
+            `SELECT orders.id AS "orderId", "createdAt", quantity, "totalPrice", cakes.name AS "cakeName"
+            FROM orders JOIN cakes ON orders."cakeId" = cakes.id 
+              WHERE orders."clientId" = ${id};`,  
+          );
+
+          if(order.rows.length === 0) return res.sendStatus(404)
+
+        res.status(201).send(order)
+    }catch (error) {
+        
+        return res.status(500).send(error.message);
+      }
+}
